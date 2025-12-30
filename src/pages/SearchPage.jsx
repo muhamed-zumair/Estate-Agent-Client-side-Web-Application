@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchForm from '../components/SearchForm';
 import data from '../data/properties.json';
-import { filterProperties } from '../utils/filterLogic';
+import { filterProperties } from '../utils/filterproperties';
 import { Link } from 'react-router-dom';
 
 const SearchPage = () => {
