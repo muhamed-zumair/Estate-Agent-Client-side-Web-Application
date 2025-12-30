@@ -1,19 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SearchPage from "./pages/SearchPage";
-import PropertyPage from "./pages/PropertyPage";
+import React from 'react';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import SearchPage from './pages/SearchPage';
+
+const PropertyPagePlaceholder = () => <h2>Property Details Coming Soon</h2>;
 
 function App() {
   return (
-
-    <BrowserRouter>
-
-      <Routes>       {/* Routes = all the pages */}
-
-        <Route path="/" element={<SearchPage />} />
-        <Route path="/property/:id" element={<PropertyPage />} />
-
-      </Routes>
-    </BrowserRouter>
+    <Router>
+      <div className="App">
+        <header className="bg-blue-800 text-white p-4">
+          <h1 className="text-2xl">Estate Agent</h1>
+        </header>
+        <Routes>
+          <Route path="/" element={<SearchPage />} />
+          <Route path="/property/:id" element={<PropertyPagePlaceholder />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
