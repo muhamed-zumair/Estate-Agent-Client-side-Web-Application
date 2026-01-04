@@ -13,6 +13,8 @@ const PropertyCard = ({ property, onFavourite, isFavourite }) => {
     })
   }));
 
+  const dateString = `${property.added.month} ${property.added.day}, ${property.added.year}`;
+
   return (
     <article
       ref={drag}
@@ -52,9 +54,12 @@ const PropertyCard = ({ property, onFavourite, isFavourite }) => {
         </div>
 
         <div className="card-actions-bar">
-          <Link to={`/property/${property.id}`} className="btn btn-primary">
-            View Details
-          </Link>
+            <span className="card-added-date">
+              Added: {dateString}
+            </span>
+            <Link to={`/property/${property.id}`} className="btn btn-primary">
+              View Details
+            </Link>
         </div>
       </div>
     </article>
