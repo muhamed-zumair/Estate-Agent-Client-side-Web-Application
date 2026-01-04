@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const NavBar = () => {
-  const [open, setOpen] = useState(false);
+  const [open] = useState(false);
 
   const prevent = (e) => e.preventDefault();
 

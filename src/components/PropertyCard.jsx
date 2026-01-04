@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDrag } from 'react-dnd';
 import { Link } from 'react-router-dom';
-import { FaBed} from 'react-icons/fa';
+import { FaBed, FaHeart, FaRegHeart} from 'react-icons/fa';
 
 
-const PropertyCard = ({ property, onFavourite }) => {
+const PropertyCard = ({ property, onFavourite, isFavourite }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'PROPERTY',
     item: { property },
@@ -29,8 +29,14 @@ const PropertyCard = ({ property, onFavourite }) => {
         <div>
           <div className="card-header">
              <h3 className="card-price">£{property.price.toLocaleString()}</h3>
-             <button onClick={onFavourite} className="btn btn-fav" title="Save">
-              ♡
+             <button onClick={onFavourite} className="btn btn-fav"
+                title={isFavourite ? "Remove from Favourites" : "Add to Favourites"}
+             >
+               {isFavourite ? (
+                <FaHeart style={{ color: "#e74c3c" }} /> 
+              ) : (
+                <FaRegHeart /> 
+              )} 
             </button>
           </div>
           

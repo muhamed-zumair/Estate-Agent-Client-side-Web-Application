@@ -22,7 +22,7 @@ const mockProperties = [
 
 describe('filterProperties Logic', () => {
 
-    // TEST 1: Check if filtering by 'Type' works
+    // TEST 1: Check filtering by Type
     test('filters properties by type correctly', () => {
         const criteria = {
             type: "Flat",
@@ -39,11 +39,11 @@ describe('filterProperties Logic', () => {
         expect(result[0].type).toBe("Flat");
     });
 
-    // TEST 2: Check if filtering by 'Price' works
+    // TEST 2: Check filtering by price
     test('filters properties within price range', () => {
         const criteria = {
             type: "Any",
-            minPrice: 400000, // Should exclude the Flat (300k)
+            minPrice: 400000, 
             maxPrice: 600000,
             minBeds: 0,
             maxBeds: 10,
@@ -56,13 +56,13 @@ describe('filterProperties Logic', () => {
         expect(result[0].price).toBe(500000);
     });
 
-    // TEST 3: Check if filtering by 'Bedrooms' works
+    // TEST 3: Check filtering by Bedrooms
     test('filters properties by minimum bedrooms', () => {
         const criteria = {
             type: "Any",
             minPrice: 0,
             maxPrice: 1000000,
-            minBeds: 3, // Should exclude the Flat (2 beds)
+            minBeds: 3, 
             maxBeds: 10,
             postcode: ''
         };
@@ -73,7 +73,7 @@ describe('filterProperties Logic', () => {
         expect(result[0].bedrooms).toBe(3);
     });
 
-    // TEST 4: Check if filtering by 'Location' (Postcode) works
+    // TEST 4: Check filtering by Location (Postcode)
     test('filters properties by location search', () => {
         const criteria = {
             type: "Any",
@@ -81,7 +81,7 @@ describe('filterProperties Logic', () => {
             maxPrice: 1000000,
             minBeds: 0,
             maxBeds: 10,
-            postcode: 'Manc' // Should match "Manchester"
+            postcode: 'Manc'
         };
 
         const result = filterProperties(mockProperties, criteria);
@@ -90,12 +90,9 @@ describe('filterProperties Logic', () => {
         expect(result[0].location).toBe("Manchester");
     });
 
-    // TEST 5: Check if filtering by 'Date Added' works
+    // TEST 5: Check filtering by Date Added
     test('filters properties added after a specific date', () => {
-        // Set filter date to Feb 1st, 2025
-        // Property 1 is Jan (should be hidden)
-        // Property 2 is March (should be shown)
-        const filterDate = new Date(2025, 1, 1); // Month is 0-indexed (1 = Feb)
+        const filterDate = new Date(2025, 1, 1); 
 
         const criteria = {
             type: "Any",

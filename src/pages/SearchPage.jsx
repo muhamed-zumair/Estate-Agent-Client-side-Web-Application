@@ -1,59 +1,76 @@
 import React, { useState, useEffect } from 'react';
 import SearchForm from '../components/SearchForm';
+import PropertyCard from '../components/PropertyCard';
+import FavouritesPanel from '../components/FavouritesPanel';
 import data from '../data/properties.json';
 import { filterProperties } from '../utils/filterProperties';
-
-import { Link } from 'react-router-dom';
+import { addFavourite, getFavourites, removeFavourite } from '../utils/favouritesManager';
 
 const SearchPage = () => {
-    const [properties, setProperties] = useState([]);
-    const [filteredProps, setFilteredProps] = useState([]);
+  const [properties, setProperties] = useState([]);
+  const [filteredProps, setFilteredProps] = useState([]);
+  const [favourites, setFavourites] = useState([]);
 
-    //Load data when component mounts
-    useEffect(() => {
-        setProperties(data.properties);
-        setFilteredProps(data.properties); // Initially show all
-    }, []);
+  useEffect(() => {
+    setProperties(data.properties);
+    setFilteredProps(data.properties);
+    setFavourites(getFavourites());
 
-    //Handle Search Event
-    const handleSearch = (criteria) => {
-        const results = filterProperties(properties, criteria);
-        setFilteredProps(results);
-    };
+    const handleStorageChange = () => setFavourites(getFavourites());
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
-    return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-6">Find Your Dream Home</h1>
-            
-            <div className="flex flex-col md:flex-row gap-6">
-                <div className="w-full md:w-1/3">
-                    <SearchForm onSearch={handleSearch} />
-                </div>
+  const handleSearch = (criteria) => {
+    const results = filterProperties(properties, criteria);
+    setFilteredProps(results);
+  };
 
-                <div className="w-full md:w-2/3">
-                    <div className="grid grid-cols-1 gap-6">
-                        {filteredProps.length === 0 ? (
-                            <p>No properties found.</p>
-                        ) : (
-                            filteredProps.map(prop => (
-                                <div key={prop.id} className="border rounded shadow hover:shadow-lg transition">
-                                    <img src={prop.picture} alt={prop.type} className="w-full h-48 object-cover" />
-                                    <div className="p-4">
-                                        <h3 className="text-xl font-bold">£{prop.price.toLocaleString()}</h3>
-                                        <p className="text-gray-600">{prop.type} - {prop.bedrooms} Bedrooms</p>
-                                        <p className="text-sm text-gray-500 mb-2">{prop.location}</p>
-                                        <Link to={`/property/${prop.id}`} className="text-blue-600 font-bold hover:underline">
-                                            View Details
-                                        </Link>
-                                    </div>
-                                </div>
-                            ))
-                        )}
-                    </div>
-                </div>
+  const handleFavouriteChange = (property) => {
+    const isFav = favourites.some(f => f.id === property.id); 
+    if (isFav) {
+      removeFavourite(property.id);
+    } else {
+      addFavourite(property);
+    }
+    
+    setFavourites(getFavourites());
+    window.dispatchEvent(new Event("storage")); 
+  };
+
+  return (
+    <main className="search-page">
+      <section className="search-bar-container">
+          <SearchForm onSearch={handleSearch} />
+      </section>
+
+      <div className="main-content-grid">
+        
+        <section className="property-list-section">
+          {filteredProps.length === 0 ? (
+            <p className="no-results">No properties found matching your criteria.</p>
+          ) : (
+            <div className="property-list">
+              {filteredProps.map(prop => (
+                <PropertyCard
+                  key={prop.id}
+                  property={prop}
+                  isFavourite={favourites.some(f => f.id === prop.id)}
+                  onFavourite={() => handleFavouriteChange(prop)}
+                />
+              ))}
             </div>
-        </div>
-    );
+          )}
+        </section>
+
+        {/* Favorite panel */}
+        <aside className="favourites-wrapper">
+          <FavouritesPanel />
+        </aside>
+
+      </div>
+    </main>
+  );
 };
 
 export default SearchPage;

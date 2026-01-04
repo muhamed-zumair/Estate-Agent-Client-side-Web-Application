@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDrop, useDrag } from 'react-dnd';
 import { getFavourites, removeFavourite, clearFavourites, addFavourite } from '../utils/favouritesManager';
 import '../styles/main.css'; 
-import { FaTrash, FaTimes } from 'react-icons/fa'; 
+import { FaTrash, FaTimes, FaHeart  } from 'react-icons/fa'; 
 
 //Draggable Item Component
 const DraggableFavItem = ({ property, onRemove }) => {
@@ -21,7 +21,7 @@ const DraggableFavItem = ({ property, onRemove }) => {
     >
         <div className="fav-item-details">
          <span className="fav-item-price">
-          {property.price}
+          £ {property.price}
          </span>
         
          <span className="fav-item-address" title={property.location}>
@@ -87,6 +87,7 @@ const FavouritesPanel = () => {
     drop: (item) => {
       const updated = addFavourite(item.property);
       setFavourites([...updated]);
+      window.dispatchEvent(new Event("storage"));
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -106,7 +107,9 @@ const FavouritesPanel = () => {
 
   return (
     <div ref={drop} className={`favourites-sidebar ${isOver ? 'drag-over' : ''}`}>
-      <h3 className="sidebar-title">Favourites</h3>
+      <h3 className="sidebar-title">
+      <FaHeart style={{ color: "red", marginRight: "8px" }} />
+        Favourites</h3>
       
       {favourites.length === 0 && (
         <p className="empty-msg"> Drag properties here to save.</p>
