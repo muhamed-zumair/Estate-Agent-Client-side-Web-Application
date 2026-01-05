@@ -1,16 +1,22 @@
-# React + Vite
+# Estate Agent React App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive real estate application built with React. This platform allows users to search for properties, view detailed information, and manage a personalized list of favourites using an interactive drag-and-drop interface.
 
-Currently, two official plugins are available:
+## 🔗 Links
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **GitHub Repository Link:** https://github.com/muhamed-zumair/Estate-Agent-Client-side-Web-Application.git
+* **Live Deployment:** https://muhamed-zumair.github.io/Estate-Agent-Client-side-Web-Application/
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Advanced Property Search:** Filter properties by type (House/Flat), price range, number of bedrooms, date added, and location (postcode).
+* **Interactive Favourites Panel:**
+    * **Drag & Drop:** Drag property cards directly into the favourites sidebar to save them.
+    * **Management:** Remove items individually or clear the entire list using the trash icon.
+    * **Persistence:** Favourites are saved to the browser's Local Storage, so they remain available after refreshing the page.
+* **Property Details:**
+    * Image Gallery with thumbnail navigation.
+    * Tabbed interface for Description, Floor Plan, and Google Maps location.
+* **Responsive Design:** optimized for desktop and mobile viewing.
+* **Routing:** Seamless navigation using `react-router-dom` (HashRouter).
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
